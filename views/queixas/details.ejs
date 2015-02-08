@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <%- include ../includes/head.ejs %>
+    <body>
+	    <%- include ../includes/header.ejs %>
+		<div class="container ">
+      <div >
+          <h3>Queixa <%=model.item.id%></h3>
+      </div>
+      
+			<div>
+					<p><label>Título:</label><%=model.item.title%></p>
+					<p><label>Descrição:</label> <%=model.item.description%></p>
+          <p><label>Votação:</label> <%=model.item.votecount%></p>
+          <p><label>Encerrado:</label> <%=model.item.closed?'Sim':'Nao' %></p>
+
+		  </div> 
+      <div class="rating-select">
+          <fieldset class="rating">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Concordo totalmente"></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Concordo pouco"></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Sem definição"></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Discordo pouco"></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Discordo totalmente"></label>
+        </fieldset>
+      </div>
+			
+		</div> <!-- /container -->
+
+		<div id="contentor" class="container">
+          <% if (isAuthenticated) { %>
+           <div >
+                <form id="formcomment" class="form-group" action="/queixas/details/<%=model.item.id%>/setcomment" method="post">
+                   
+                    <div class="col-sm-9">
+                        <input class="form-control"  id="textbox" name="Texto"  type="text" placeholder="Comentário....">
+                    </div>
+
+                    <div class="col-sm-1">
+                        <button type="submit" class="btn btn-primary">Comentar</button>
+                       
+                          <button type="button" class="btn btn-success" onclick="location.href='/queixas/notify/<%=model.item.id%>'"> <%=model.notify.length>0 ? 'Não Notificar':'Notificar' %></button>
+                         
+                    </div>
+                </form>
+            </div>
+             <%}%>
+
+       </div>
+
+		<div  class="container">
+            <div class="col-sm-9">
+                <div id="scroll_list" class="bg-info" style="height:200px;overflow:scroll;">
+                    <% for(var i = 0; i < model.comments.length ; ++i) { %>
+                    <blockquote id="blockcomment">
+                      <p><%=model.comments[i].description%></p>
+                      <footer><%=model.comments[i].usr%></footer>
+                    </blockquote>
+                    <%}%>
+                 </div>
+             </div>
+
+        </div>
+		<%- include ../includes/footer.ejs %>
+    </body>
+
+
+
+
+</html>
+

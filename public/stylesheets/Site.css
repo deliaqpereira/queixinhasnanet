@@ -1,0 +1,33 @@
+﻿/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+legend {
+  padding-top: 20px;
+}
+
+.col-sm-0 {
+  position: relative;
+  min-height: 1px;
+  padding-top: 7px;
+  padding-right: 15px;
+  padding-left: 12px;
+  float: left;
+  width: 3.66666666%;
+}
+
+.col-sm-45 {
+  width: 39.2%;
+}
+
+.pagination {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.advertdetails {
+    margin-left: -15px;
+    padding-right: 15px;
+}

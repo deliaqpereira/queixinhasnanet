@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <%- include ../includes/head.ejs %>
+    <body>
+		<%- include ../includes/header.ejs %>
+		<div class="container">
+			<div class="page-header">
+				<h3>Criar uma nova conta no portal QueixinhasNaNet</h3>
+			</div>
+			<%
+				this.errorMsg = this.errorMsg || '';
+			%>
+			<p class="message-success"><%= errorMsg %></p>
+			<form role="form" action="/users/registar" method="post">
+				<div class="form-group">
+					<label for="userName">Nome do utilizador</label>
+					<input type="text" class="form-control" placeholder="Digite o nome do utilizador" data-val="true" data-val-required="O nome do utilizador é obrigatório." id="userName" name="userName" value="">
+				</div>
+				<div class="form-group">
+					<label for="email">Email do utilizador</label>
+					<input type="text" class="form-control" placeholder="Digite o email do utilizador" data-val="true" data-val-required="O email do utilizador é obrigatório." id="userEmail" name="userEmail" value="">
+				</div>
+				<div class="form-group">
+					<label for="password">Palavra Passe</label>
+					<input type="password" class="form-control" data-val="true" data-val-length="A palavra passe deve ter pelo menos 6 caracteres." data-val-length-max="100" data-val-length-min="3" data-val-required="A palavra passe é obrigatória." id="password" name="password" />
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirmação da palavra Passe</label>
+					<input type="password" class="form-control" data-val="true" data-val-equalto="A palavra passe e confirmação não correspondem" data-val-equalto-other="*.Password" id="confirmPassword" name="confirmPassword" />
+				</div>        
+				<button type="submit" class="btn btn-primary">Registar</button>
+			</form>
+		</div>
+		<script src="/javascripts/jquery.validate.js"></script>
+		<script src="/javascripts/jquery.validate.unobtrusive.js"></script>
+        <%- include ../includes/footer.ejs %>
+    </body>
+</html>

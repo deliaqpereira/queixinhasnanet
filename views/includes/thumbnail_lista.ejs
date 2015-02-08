@@ -1,0 +1,30 @@
+
+<div class="row">
+<% for(var i = 0; i <  model.length ; ++i) { %>
+	<div class="col-md-4">
+		<div class="media thumbnail">
+			<div class="media-body">
+				<a href="/queixas/details/<%=model[i].id%>" >
+					<h4 class="media-heading"><%=model[i].id%>"-"<%=model[i].title%></h4>
+				</a>
+				<p class="limitchar"><%=model[i].description%></p>
+				<hr />
+
+			</div>
+			<div class="rating-select">
+			    <fieldset class="rating">
+    				<input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Concordo totalmente"></label>
+    				<input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Concordo pouco"></label>
+    				<input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Sem definição"></label>
+    				<input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Discordo pouco"></label>
+    				<input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Discordo totalmente"></label>
+				</fieldset>
+			    <a class="btn btn-info pull-right" href="/queixas/details/<%=model[i].id%>" role="button">Detalhes</a>
+			</div>
+
+
+		</div>
+	</div>
+<% } %>
+</div>
+

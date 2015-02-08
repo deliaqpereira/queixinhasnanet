@@ -1,0 +1,37 @@
+<%
+	this.isAuthenticated = this.isAuthenticated || false;
+	this.identity = this.identity || '';
+%>
+<header>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Queixinhas Na Net</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<% if (isAuthenticated) { %>
+					<form class="navbar-form navbar-right" action="/users/sair" method="get">
+						<button type="submit" class="btn btn-success">Sair</button>
+					</form>
+					<form class="navbar-form navbar-right" action="/queixas/utilizador" method="get">
+						<button type="submit" class="btn btn-success">As minhas queixas</button>
+					</form>
+					<form class="navbar-form navbar-right" action="/queixas/criar" method="get">
+						<span class="text-success">Olá, </span><a href="/users/editar"><%= identity %></a> &nbsp;&nbsp;
+						<button type="submit" class="btn btn-success">Adicionar queixa</button>
+					</form>
+					<% } else { %>
+					<form class="navbar-form navbar-right" action="/users/login" method="get">
+						<button type="submit" class="btn btn-success">Entrar</button>
+					</form>
+					<form class="navbar-form navbar-right" action="/users/registar" method="get">
+						<button type="submit" class="btn btn-success">Registar</button>
+					</form>
+					<form class="navbar-form navbar-right" action="/howto" method="get">
+						<button type="submit" class="btn btn-success">Saiba como funciona</button>
+					</form>
+					<% } %>
+			</div>
+		</div>
+	</div>
+</header>

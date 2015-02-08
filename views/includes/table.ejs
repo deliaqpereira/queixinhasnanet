@@ -1,0 +1,148 @@
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>
+<script>
+    
+
+    function ConfirmarApagar(id) {
+        if (!confirm("Deseja apagar a sua queixa?")) {
+            return;
+        }
+        $.ajax({
+             type: "DELETE",
+            url: "/queixas/apagar/" + id,
+            success: function(msg){
+
+                alert(msg);
+                location.reload();
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                alert("Erro ao apagar a queixa. " + errorThrown);
+            }
+        });
+    }
+
+    var asc = true;
+    function ordena(col) 
+    {
+        var rows = document.getElementsByClassName('items');
+        var valor = new Array();
+        var no;
+        
+        for (no = 0; no < rows.length; no++) {
+            var obj = new Object();
+            
+            if (col == 0) {
+
+                var cells=rows[no].getElementsByTagName('TD')[0].getElementsByTagName('DIV');
+                obj.orderby = cells[1].innerHTML.toLowerCase();
+
+            } else if (col==1) {
+                var cells=rows[no].getElementsByTagName('TD')[0].getElementsByTagName('DIV');
+
+                var colAno = cells[0].getElementsByTagName('P')[1].getElementsByTagName('LABEL')[0];
+
+                alert(cells[0].getElementsByTagName('P')[1].innerHTML.toLowerCase());
+                
+                obj.orderby = colAno.innerHTML.toLowerCase();
+            }
+            obj.string = rows[no].innerHTML;
+            valor[no] = obj;
+        }
+
+        if (asc)
+        {
+            valor = valor.sort(AscendentSort("orderby"));
+        }
+        else 
+        {
+            valor = valor.sort(DescendentSort("orderby"));
+        }
+
+        if (asc == true)
+            asc = false;
+        else
+            asc = true;
+
+        for (no = 0; no < rows.length; no++) {
+            rows[no].innerHTML = valor[no].string;
+        }
+    }
+
+    function AscendentSort(property)
+    {
+        return function (a, b) {
+            return (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        };
+    }
+
+    function DescendentSort(property) {
+        return function (a, b) {
+            return (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+        };
+    }
+
+</script>
+
+
+<div class="container"> 
+<nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <p class="navbar-text">Foram encontradas <%=model.length%> queixas</p>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <p class="navbar-text">Ordenar por</p>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="javascript:ordena(0)">Titulo</a></li>
+                    <li><a href="javascript:ordena(1)">Data</a></li>
+                    <li><a href="javascript:ordena(2)">Votação</a></li>
+                </ul>
+                <ul class="nav navbar-right pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+<table class="table table-striped">
+<tbody>
+	<% for(var i = 0; i < model.length; ++i) { %>
+		<tr class="items">
+          <td class="col-sm-0">
+          	<div class="pull-left">
+                  <p>Titulo</p>
+                  <a href="/queixas/details/<%=model[i].id%>"<h4 class="media-heading"><%= model[i].title%></h4></a>
+
+                  <p><label>Data: </label> <%= model[i].creationDate.getFullYear() + '-' + 
+                                        (model[i].creationDate.getMonth() + 1 < 10 ? '0' + (model[i].creationDate.getMonth() + 1) : (model[i].creationDate.getMonth() + 1)) + '-' + 
+                                        (model[i].creationDate.getDate() < 10 ? '0'+model[i].creationDate.getDate() : model[i].creationDate.getDate()) %> 
+                    <label>Votação: </label><%= model[i].votecount%></p>
+
+                    <div class="rating-select">
+                        <fieldset class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Concordo totalmente"></label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Concordo pouco"></label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Sem definição"></label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Discordo pouco"></label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Discordo totalmente"></label>
+                        </fieldset>
+                    </div>
+
+              </div>
+              
+
+              <br /><br />
+              <div class="pull-right">
+                  <button type="button" class="btn btn-success" onclick="location.href='/queixas/editar/<%=model[i].id%>'">Editar</button>
+                  <button type="button" class="btn btn-danger" onclick="ConfirmarApagar(<%=model[i].id%>)">Apagar</button>
+              </div>
+            </td>
+        </tr>
+	<% } %>
+ </tbody>
+ </table>
+</div>

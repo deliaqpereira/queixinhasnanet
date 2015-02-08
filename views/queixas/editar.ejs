@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <%- include ../includes/head.ejs %>
+    <body>
+		<%- include ../includes/header.ejs %>
+		<script src="/javascripts/jquery.validate.js"></script>
+		<script src="/javascripts/jquery.validate.unobtrusive.js"></script>
+		<div class="container">
+			<form class="form-horizontal" action="/queixas/editar" method="post" role="form">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Alteração da queixa <%=model.item.id%></legend>
+					</fieldset>
+				</div>
+				<div class="form-group">
+					<input type="hidden" id="id" name="id" value="<%= model.item.id %>">
+					<label for="titulo" class="col-sm-2 control-label">Título</label>
+					<div class="col-sm-5">
+						<input type="text" id="titulo" name="titulo" class="form-control" placeholder="Título" data-val="true" data-val-required="O título é obrigatório." data-val-length-max="100" data-val-length-min="6" data-val-length="O título tem de ter pelo menos 6 caracteres." value="<%=model.item.title%>"/>
+					</div>
+					<span class="field-validation-error" data-valmsg-for="titulo" data-valmsg-replace="true"></span>
+				</div>
+				<div class="form-group">
+					<label for="descricao" class="col-sm-2 control-label">Descrição</label>
+					<div class="col-sm-5">
+						<input type="text" id="descricao" name="descricao" class="form-control" placeholder="Texto" data-val="true" data-val-required="A descrição é obrigatória." data-val-length-max="140" data-val-length-min="6" data-val-length="A descrição tem de ter pelo menos 6 caracteres." value="<%=model.item.description%>"/>
+					</div>
+					<span class="field-validation-error" data-valmsg-for="descricao" data-valmsg-replace="true"></span>
+				</div>
+				<div class="form-group">
+					<label for="distrito" class="col-sm-2 control-label">Distrito</label>
+					<div class="col-sm-5">
+						<select id="distrito" name="distrito" class="form-control" data-val="true" data-val-required="O distrito é obrigatório." value="<%=model.item.idcity%>">          
+							<option disabled="disabled" selected="selected" >Distrito</option>
+							<% for(var i = 0; i < model.distrito.length; ++i) { %>
+								<option value="<%= model.distrito[i].id %>"><%= model.distrito[i].city %></option> 
+							<% } %>
+						</select>
+						<script>
+							$("#distrito").change(function () {
+								var selected = $("#distrito option:selected").val();
+								if (selected > 0) {
+									$.getJSON("/distrito/" + selected + "/localidade", function (data) {
+										$("#localidade").empty();
+										$.each(data, function (key, val) {
+											$("#localidade").append($('<option>', {
+												value: val.id,
+												text: val.nome
+											}));
+										});
+									});
+								}
+							});
+						</script>
+
+					</div>
+					<span class="field-validation-valid" data-valmsg-for="distrito" data-valmsg-replace="true"></span>
+				</div>
+				<div class="form-group">
+					<label for="localidade" class="col-sm-2 control-label">Localidade</label>
+					<div class="col-sm-5">
+						<select id="localidade" name="localidade" class="form-control" data-val="true" data-val-required="A localidade é obrigatória.">
+							<option disabled="disabled" selected="selected">Localidade</option>
+						</select>
+					</div>
+					<span class="field-validation-valid" data-valmsg-for="localidade" data-valmsg-replace="true"></span>
+				</div>
+				<div class="form-group">
+					<label for="encerrado" class="col-sm-2 control-label">Encerrado</label>
+					<div class="col-sm-5">
+					<input type="checkbox" name="encerrado" id="encerrado" <%=model.item.closed%>?'checked' : ''  >
+					</div>
+				</div>
+
+				<div>
+					<label class="col-sm-5 control-label"></label>
+					<div class="col-sm-2">
+						<button type="submit" class="btn btn-success">Submeter </button>
+					</div>
+				</div>
+				<div class="validation-summary-errors"><ul><li style="display:none"></li></ul></div>
+			</form>
+			
+		</div>
+		<!-- /container -->
+		<%- include ../includes/footer.ejs %>
+    </body>
+</html>
