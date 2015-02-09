@@ -361,12 +361,6 @@ router.get('/utilizador', authorization('/users/login'), function(req, res, next
 	});
 });
 
-//var smtpTransport = nodemailer.createTransport("SMTP",
-//{   service: "Gmail",
-  // sets automatically host, port and connection security settings   
-//  auth: {       user: "pi.g15n@gmail.com",       pass: "12345poiuy"   }
-//});
-
 var transport = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
 
