@@ -218,16 +218,15 @@ router.post('/editar', authorization('/users/login'), function(req, res){
 
 
 /* POST /queixas/search - Gravar alteracoes da queixa */
-router.post('/search',authorization('/users/login'), function(req, res){
+router.post('/search',authorization('/users/login'), function(req, res, next){
 
 	async.series({
 	    queixaSearch:function(callback){
 	        
 	        queixa.getBySearch(req.body.Texto, function (err, queixas)
 			{
-				if (err) return next (new Error(err));
 
-				callback(null, queixas);
+				callback(err, queixas);
 			});
 
 	    }
