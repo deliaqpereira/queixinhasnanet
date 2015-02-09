@@ -6,15 +6,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//modulos de autenticação 
-var passport = require('passport');
-var session = require('express-session');
 
 //carregamento dos modulos especificos
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var queixas = require('./routes/queixas');
 var distrito = require('./routes/distrito');
+//modulos de autenticação 
 var authorization = require('./middleware/authorization');
 
 
@@ -31,12 +29,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-//inicializar modulo de sessao
-app.use(session({ secret: 'Thisizabigsecretusedtomanagesessioncookie', resave: false, saveUninitialized: false }));
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 //controllers
 app.use(authorization());

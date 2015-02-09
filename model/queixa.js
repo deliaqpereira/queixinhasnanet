@@ -32,7 +32,7 @@ module.exports = Queixa;
 Queixa.findAll = function(cb)
 {
     
-    db.selectAll("SELECT idqueixa, title, descr, dtcreate, votecount, closed from dbQueixas order by idqueixa",
+    db.selectAll("SELECT idqueixa, title, descr, dtcreate, votecount, closed from dbQueixas where closed=0 order by idqueixa",
         
         function(row) { 
             return  new Queixa(row.idqueixa, row.title, row.descr, row.dtcreate, row.votecount, row.closed); 
