@@ -93,8 +93,6 @@
                 <p class="navbar-text">Ordenar por</p>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="javascript:ordena(0)">Titulo</a></li>
-                    <li><a href="javascript:ordena(1)">Data</a></li>
-                    <li><a href="javascript:ordena(2)">Votação</a></li>
                 </ul>
                 <ul class="nav navbar-right pagination">
                     <li><a href="#">&laquo;</a></li>
@@ -134,12 +132,13 @@
 
               </div>
               
-
+              <% if (isAuthenticated) { %>
               <br /><br />
               <div class="pull-right">
                   <button type="button" class="btn btn-success" onclick="location.href='/queixas/editar/<%=model[i].id%>'">Editar</button>
                   <button type="button" class="btn btn-danger" onclick="ConfirmarApagar(<%=model[i].id%>)">Apagar</button>
               </div>
+              <% } %>
             </td>
         </tr>
 	<% } %>

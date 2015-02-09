@@ -21,4 +21,10 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.get('/howto', function (req, res, next) {
+
+	res.render('howto');
+
+});
+
 module.exports = router;

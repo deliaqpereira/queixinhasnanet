@@ -12,11 +12,8 @@ module.exports = {
 /// Database config
 ///
 var pg = require('pg');
-//var config = require('../config.json');
-
-
-//var connString = "pg://postgres:poqw12@localhost:5432/datastore";
-var connString = "pg://esuoljgnhhpspg:a59uOWemlyfXOu8fuK48JzOBeK@postgres://esuoljgnhhpspg:a59uOWemlyfXOu8fuK48JzOBeK@ec2-107-20-169-200.compute-1.amazonaws.com:5432/d9art4oc2q6c9l";
+var connString = "pg://postgres:poqw12@localhost:5432/datastore";
+//var connString = "pg://esuoljgnhhpspg:a59uOWemlyfXOu8fuK48JzOBeK@postgres://esuoljgnhhpspg:a59uOWemlyfXOu8fuK48JzOBeK@ec2-107-20-169-200.compute-1.amazonaws.com:5432/d9art4oc2q6c9l";
 
 
 ///
@@ -24,6 +21,7 @@ function dbSelectAll(query, createElem, callback)
 {
     pg.connect(connString, function(err, client, done) {
 
+        
         if(err) return callback("Error fetching client from pool: " + err);
 
         client.query(query, function(err, result) {

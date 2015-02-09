@@ -216,6 +216,37 @@ router.post('/editar', authorization('/users/login'), function(req, res){
 	});
 });
 
+
+/* POST /queixas/search - Gravar alteracoes da queixa */
+router.post('/search',authorization('/users/login'), function(req, res){
+
+	async.series({
+	    queixaSearch:function(callback){
+	        
+	        queixa.getBySearch(req.body.Texto, function (err, queixas)
+			{
+				if (err) return next (new Error(err));
+
+				callback(null, queixas);
+			});
+
+	    }
+	},
+    // optional callback
+	function(err, results){
+
+			if (err) return next (new Error(err));
+
+			
+			res.render('queixas/utilizador',{	title: 'Lista de queixinhas', 
+												model:results.queixaSearch,
+												isAuthenticated: req.isAuthenticated,
+												identity: req.identity
+											});
+
+	});
+});
+
 /* GET /queixas/notify - Gravar no utilizador que vai ser notificcado */
 router.get('/notify/:id', authorization('/users/login'), function(req, res){
 
@@ -340,8 +371,8 @@ var transport = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
 
     auth: {
-        user: 'deliaqpereira@gmail.com',
-        pass: 'imlp2011'
+        user: 'pi.g15n@gmail.com',
+        pass: '12345poiuy'
     }
 }));
 

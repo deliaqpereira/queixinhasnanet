@@ -64,6 +64,17 @@ Queixa.getAllByUsr = function(id, cb)
         cb);
 };
 
+Queixa.getBySearch = function(search, cb)
+{
+    db.selectAll("SELECT idqueixa, title, descr, dtcreate, votecount from dbQueixas where dbQueixas.title ilike '%"+search+"%'"+" or dbQueixas.descr ilike '%"+search+"%'",
+        function(row) {
+            return  new Queixa(row.idqueixa, row.title, row.descr, row.dtcreate, row.votecount); 
+
+         },
+
+        cb);
+};
+
 Queixa.getNextId = function(cb)
 {
     db.selectAll("select *  from dbQueixas order by idqueixa desc limit 1",
