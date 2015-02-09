@@ -132,7 +132,7 @@
 
               </div>
               
-              <% if (isAuthenticated) { %>
+              <% if (isAuthenticated && !hidebtns) { %>
               <br /><br />
               <div class="pull-right">
                   <button type="button" class="btn btn-success" onclick="location.href='/queixas/editar/<%=model[i].id%>'">Editar</button>

@@ -241,7 +241,8 @@ router.post('/search',authorization('/users/login'), function(req, res){
 			res.render('queixas/utilizador',{	title: 'Lista de queixinhas', 
 												model:results.queixaSearch,
 												isAuthenticated: req.isAuthenticated,
-												identity: req.identity
+												identity: req.identity,
+												hidebtns: true
 											});
 
 	});
@@ -355,7 +356,8 @@ router.get('/utilizador', authorization('/users/login'), function(req, res, next
 			res.render('queixas/utilizador',{	title: 'Lista de queixinhas', 
 												model:results.queixasByUsr,
 												isAuthenticated: req.isAuthenticated,
-												identity: req.identity
+												identity: req.identity,
+												hidebtns: false
 											});
 		}
 	});
